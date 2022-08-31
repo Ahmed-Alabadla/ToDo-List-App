@@ -1,0 +1,9 @@
+.css-1sumxir-MuiFormLabel-root-MuiInputLabel-root {
+  /* transform: translate(18px, -9px) scale(0.75) !important; */
+}
+[type="tel"]:focus {
+  outline: none !important;
+  outline-offset: 0 !important;
+  border: none !important;
+  box-shadow: none !important;
+}
