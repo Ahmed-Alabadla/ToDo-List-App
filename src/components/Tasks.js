@@ -3,8 +3,9 @@ import { MdDelete } from "react-icons/md";
 import { HiPencil } from "react-icons/hi";
 
 import { useDispatch } from "react-redux";
-import { blockUpdateTaskAction } from "../redux/actions/displayActions";
+// import { blockUpdateTaskAction } from "../redux/actions/displayActions";
 import UpdateTask from "./UpdateTask";
+import { blockUpdateTaskAction } from "../redux/displaySlice";
 
 function Tasks(props) {
   const [completed, setCompleted] = useState(false);

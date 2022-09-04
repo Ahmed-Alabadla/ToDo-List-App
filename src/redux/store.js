@@ -1,6 +1,11 @@
-import { createStore } from "redux";
-import displayReducser from "./reducers/displayReducser";
+import displayReducer from "./reducers/displayReducer";
+import { configureStore } from "@reduxjs/toolkit";
+import displaySlice from "./displaySlice";
 
-const store = createStore(displayReducser);
-
+const store = configureStore({
+  reducer: {
+    displayReducer: displayReducer,
+    displaySlice: displaySlice,
+  },
+});
 export default store;

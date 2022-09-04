@@ -3,20 +3,37 @@ import React, { useState } from "react";
 import Tasks from "./Tasks";
 import NavbarTop from "./NavbarTop";
 import AddTask from "./AddTask";
-
 import { useSelector, useDispatch } from "react-redux";
-
-import { blockAddTaskAction } from "../redux/actions/displayActions";
+import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+// import { blockAddTaskAction } from "../redux/actions/displayActions";
+import { blockAddTaskAction } from "../redux/displaySlice";
 
 function HomePage() {
-  const displayAdd = useSelector((state) => state.displayAddTask);
-  const displayUpdate = useSelector((state1) => state1.displayUpdateTask);
+  const displayAdd = useSelector((state) => state.displaySlice.displayAddTask);
+  const displayUpdate = useSelector(
+    (state) => state.displaySlice.displayUpdateTask
+  );
 
   const dispatch = useDispatch();
 
   const handleAddTask = () => {
     dispatch(blockAddTaskAction());
   };
+  // localStorage.clear();
+  const [user, setUser] = useState({});
+
+  const route = useNavigate();
+  useEffect(() => {
+    const loggedInUser = localStorage.getItem("user");
+    if (loggedInUser) {
+      const foundUser = JSON.parse(loggedInUser);
+      setUser(foundUser);
+      console.log(foundUser);
+    } else {
+      route("/login");
+    }
+  }, []);
 
   return (
     <>

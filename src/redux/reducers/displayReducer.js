@@ -8,7 +8,7 @@ import {
   HIDDENUPDATEPASSWORD,
   HIDDENUPDATETASK,
 } from "../actions/types";
-const displayReducser = (
+const displayReducer = (
   state = {
     displayAddTask: "hidden",
     displayUpdateTask: "hidden",
@@ -61,4 +61,4 @@ const displayReducser = (
   }
 };
 
-export default displayReducser;
+export default displayReducer;

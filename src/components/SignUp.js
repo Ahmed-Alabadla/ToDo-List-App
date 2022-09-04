@@ -1,15 +1,13 @@
 import axios from "axios";
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { AiFillEyeInvisible, AiFillEye } from "react-icons/ai";
+import { useEffect } from "react";
 
 function SignUp() {
-  // const [user, setUser] = useState([]);
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [conPass, setConPass] = useState("");
+  const [success, setSuccess] = useState(true);
+  const [alertMessage, setAlertMessage] = useState("");
 
   // handle Password eye
   const [passwordEye, setPasswordEye] = useState(false);
@@ -27,22 +25,51 @@ function SignUp() {
   const checkPassword = watch("password");
 
   // handleSubmit
-  const onSubmit = (date) => {
-    console.log(date);
-    const requestOptions = {
-      name: date.name,
-      email: date.email,
-      password: date.password,
-    };
+  const onSubmit = (data) => {
+    console.log(data);
 
-    // console.log(requestOptions);
+    const { name, email, password } = data;
+
+    console.log({ name, email, password });
     axios
-      .post("https://jsonplaceholder.typicode.com/users", requestOptions)
+      .post(
+        `https://tasks-todo-list-api.000webhostapp.com/api/register`,
+        {
+          name,
+          email,
+          password,
+        },
+        {
+          headers: {
+            Accept: "application/json",
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      )
       .then((res) => {
-        console.log(res.date);
+        console.log(res.data);
+        if (res.data.code === 400) {
+          setSuccess(false);
+          setAlertMessage(res.data.data.email[0]);
+        }
+        if (res.data.code === 200) {
+          setSuccess(true);
+          route("/login");
+        }
       });
   };
 
+  // -----------------
+
+  const route = useNavigate();
+  useEffect(() => {
+    const loggedInUser = localStorage.getItem("user");
+    if (loggedInUser) {
+      // const foundUser = JSON.parse(loggedInUser);
+
+      route("/");
+    }
+  }, []);
   return (
     <div className="h-screen   flex items-center justify-center ">
       <div className="max-w-md w-full space-y-8 py-12 px-4 sm:px-6 lg:px-8 rounded-lg shadow-lg mx-auto">
@@ -50,6 +77,31 @@ function SignUp() {
           <h2 className="mb-6 text-center text-3xl tracking-tight font-medium text-blue-600 ">
             Get Started
           </h2>
+          {/* ----------------------- */}
+          {!success && (
+            <div
+              className="flex p-4 mb-4 text-sm text-red-700 bg-red-100 rounded-lg dark:bg-red-200 dark:text-red-800"
+              role="alert"
+            >
+              <svg
+                aria-hidden="true"
+                className="flex-shrink-0 inline w-5 h-5 mr-3"
+                fill="currentColor"
+                viewBox="0 0 20 20"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  fill-rule="evenodd"
+                  d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z"
+                  clip-rule="evenodd"
+                ></path>
+              </svg>
+              <span className="sr-only">Info</span>
+              <div>
+                <span className="font-medium">Failed!</span> {alertMessage}
+              </div>
+            </div>
+          )}
         </div>
         <form
           className="mt-8 space-y-6"
@@ -70,7 +122,6 @@ function SignUp() {
                   "focus:border-red-500 focus:ring-red-500 border-red-500"
                 }`}
                 placeholder="Enter your name"
-                onChange={(e) => setName(e.target.value)}
                 {...register("name", {
                   required: "Full name is required",
                 })}
@@ -102,7 +153,6 @@ function SignUp() {
                   "focus:border-red-500 focus:ring-red-500 border-red-500"
                 }`}
                 placeholder="name@example.com"
-                onChange={(e) => setEmail(e.target.value)}
                 {...register("email", {
                   required: "Email is required",
                   pattern: {
@@ -131,8 +181,7 @@ function SignUp() {
           <div className="relative">
             <div className="relative">
               <input
-                // name="password"
-                name="phone"
+                name="password"
                 type={passwordEye === false ? "password" : "text"}
                 id="labelPassword"
                 className={`block px-2.5 pb-2.5 pt-4 w-full text-sm text-gray-900 bg-transparent rounded-lg border-1 border-gray-300 appearance-none focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500 peer focus:placeholder:text-slate-400 placeholder:text-transparent ${
@@ -140,7 +189,6 @@ function SignUp() {
                   "focus:border-red-500 focus:ring-red-500 border-red-500"
                 }`}
                 placeholder="********"
-                onChange={(e) => setPassword(e.target.value)}
                 {...register("password", {
                   required: "Password is required",
                   minLength: {
@@ -193,7 +241,6 @@ function SignUp() {
                   e.preventDefault();
                   return false;
                 }}
-                onChange={(e) => setConPass(e.target.value)}
                 {...register("confirmPassword", {
                   required: "Confirm password is required",
 
@@ -247,7 +294,7 @@ function SignUp() {
         <div className="text-center">
           Already have an account?{" "}
           <span className="text-blue-700">
-            <Link to="/">Sign in</Link>
+            <Link to="/login">Sign in</Link>
           </span>
         </div>
       </div>

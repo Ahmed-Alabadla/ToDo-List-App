@@ -2,8 +2,10 @@ import React, { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { GrClose } from "react-icons/gr";
 import { AiFillEyeInvisible, AiFillEye } from "react-icons/ai";
-import { hiddenUpdateNameAction } from "../redux/actions/displayActions";
+// import { hiddenUpdateNameAction } from "../redux/actions/displayActions";
 import { useDispatch } from "react-redux";
+import axios from "axios";
+import { hiddenUpdateNameAction } from "../redux/displaySlice";
 
 function ChangeName(props) {
   const [display, setDisplay] = useState(props.display);
@@ -19,10 +21,6 @@ function ChangeName(props) {
   // handle Password eye
   const [passwordEye, setPasswordEye] = useState(false);
 
-  // const [user, setUser] = useState({});
-  const [name, setName] = useState("");
-  const [password, setPassword] = useState("");
-
   // handle form events
   const {
     register,
@@ -31,15 +29,26 @@ function ChangeName(props) {
     formState: { errors },
   } = useForm();
 
-  // check password event
-  const checkPassword = "12345678";
-
   // handleSubmit
   const onSubmit = (data) => {
     console.log(data);
-    const requestOptions = {};
 
-    console.log(requestOptions);
+    // axios
+    //   .post(
+    //     "https://tasks-todo-list-api.000webhostapp.com/api/login",
+    //     data,
+    //     {
+    //       headers: {
+    //         Accept: "application/json",
+    //         "Content-Type": "multipart/form-data",
+    //       },
+    //     }
+    //   )
+    //   .then((res) => {
+
+    //     console.log(res.data);
+    //   })
+    //   .catch((err) => console.log(err));
   };
 
   return (
@@ -48,7 +57,6 @@ function ChangeName(props) {
       aria-labelledby="modal-title"
       role="dialog"
       aria-modal="true"
-      id="updataTask"
     >
       <div className="fixed z-10 inset-0 overflow-y-auto">
         <div
@@ -83,7 +91,6 @@ function ChangeName(props) {
                         "focus:border-red-500 focus:ring-red-500 border-red-500"
                       }`}
                       placeholder="Enter your name"
-                      onChange={(e) => setName(e.target.value)}
                       {...register("name", {
                         required: "New name is required",
                       })}
@@ -115,7 +122,6 @@ function ChangeName(props) {
                         "focus:border-red-500 focus:ring-red-500 border-red-500"
                       }`}
                       placeholder="********"
-                      onChange={(e) => setPassword(e.target.value)}
                       {...register("password", {
                         required: "Password is required",
                         minLength: {
@@ -126,9 +132,6 @@ function ChangeName(props) {
                           value: 20,
                           message: "Password must have at most 20 characters",
                         },
-                        validate: (value) =>
-                          value === checkPassword ||
-                          "The password do not match",
                       })}
                     />
                     <label

@@ -3,7 +3,8 @@ import { GrClose } from "react-icons/gr";
 import { AiFillEyeInvisible, AiFillEye } from "react-icons/ai";
 import { useForm } from "react-hook-form";
 import { useDispatch } from "react-redux";
-import { hiddenUpdatePasswordAction } from "../redux/actions/displayActions";
+import { hiddenUpdatePasswordAction } from "../redux/displaySlice";
+// import { hiddenUpdatePasswordAction } from "../redux/actions/displayActions";
 
 function ChangePassword(props) {
   // handle Password eye
@@ -51,7 +52,6 @@ function ChangePassword(props) {
       aria-labelledby="modal-title"
       role="dialog"
       aria-modal="true"
-      id="updataTask"
     >
       <div className="fixed z-10 inset-0 overflow-y-auto">
         <div

@@ -5,13 +5,14 @@ import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DateTimePicker } from "@mui/x-date-pickers/DateTimePicker";
 import { GrClose } from "react-icons/gr";
 import { useDispatch } from "react-redux";
-import { hiddenAddTaskAction } from "../redux/actions/displayActions";
+import { hiddenAddTaskAction } from "../redux/displaySlice";
+// import { hiddenAddTaskAction } from "../redux/actions/displayActions";
 
 // import axios from "axios";
 
 const AddTask = (props) => {
   const [title, setTitle] = useState("");
-  const [discription, setDiscription] = useState("");
+  const [description, setDescription] = useState("");
   const [value, setValue] = useState(new Date());
 
   const dispatch = useDispatch();
@@ -30,12 +31,12 @@ const AddTask = (props) => {
   const handleSubmitForm = (e) => {
     e.preventDefault();
 
-    const data = { title, discription, value };
+    const data = { title, discription: description, value };
     console.log(data);
 
     if (!title.length > 0) {
       refTitle.current.focus();
-    } else if (!discription.length > 0) {
+    } else if (!description.length > 0) {
       refDisc.current.focus();
     } else {
       // axios
@@ -106,7 +107,7 @@ const AddTask = (props) => {
                         rows={4}
                         placeholder=""
                         required
-                        onChange={(e) => setDiscription(e.target.value)}
+                        onChange={(e) => setDescription(e.target.value)}
                         ref={refDisc}
                       />
                     </label>

@@ -5,7 +5,8 @@ import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DateTimePicker } from "@mui/x-date-pickers/DateTimePicker";
 import { GrClose } from "react-icons/gr";
 import { useDispatch } from "react-redux";
-import { hiddenUpdateTaskAction } from "../redux/actions/displayActions";
+import { hiddenUpdateTaskAction } from "../redux/displaySlice";
+// import { hiddenUpdateTaskAction } from "../redux/actions/displayActions";
 
 function UpdateTask(props) {
   const [displayUpdate, setDisplayUpdate] = useState(props.display);
@@ -20,7 +21,7 @@ function UpdateTask(props) {
   };
 
   const [title, setTitle] = useState("");
-  const [discription, setDiscription] = useState("");
+  const [description, setDescription] = useState("");
   const [value, setValue] = useState(new Date());
 
   const refTitle = useRef();
@@ -29,12 +30,12 @@ function UpdateTask(props) {
   const handleSubmitForm = (e) => {
     e.preventDefault();
 
-    const data = { title, discription, value };
+    const data = { title, description, value };
     console.log(data);
 
     if (!title.length > 0) {
       refTitle.current.focus();
-    } else if (!discription.length > 0) {
+    } else if (!description.length > 0) {
       refDisc.current.focus();
     } else {
       // axios
@@ -90,17 +91,17 @@ function UpdateTask(props) {
                 </div>
                 <div>
                   <label
-                    for="discription"
+                    for="description"
                     className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300"
                   >
-                    Discription
+                    Description
                     <textarea
-                      id="discription"
+                      id="description"
                       className="resize-none mt-2 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                       rows={4}
                       placeholder=""
                       required
-                      onChange={(e) => setDiscription(e.target.value)}
+                      onChange={(e) => setDescription(e.target.value)}
                       ref={refDisc}
                     />
                   </label>

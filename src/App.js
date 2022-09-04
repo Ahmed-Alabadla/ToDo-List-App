@@ -12,9 +12,9 @@ function App() {
     <>
       <BrowserRouter>
         <Routes>
-          <Route path="/home" element={<HomePage />} />
-          <Route path="/" element={<SignIn />} />
-          <Route path="/signup" element={<SignUp />} />
+          <Route path="/" element={<HomePage />} />
+          <Route path="/login" element={<SignIn />} />
+          <Route path="/register" element={<SignUp />} />
           <Route path="/profile" element={<Profile />} />
           <Route path="/forgotpassword" element={<ForgotPassword />} />
           <Route path="/resetpassword" element={<ResetPassword />} />

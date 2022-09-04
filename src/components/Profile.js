@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import NavbarTop from "./NavbarTop";
 import ChangePassword from "./ChangePassword";
 import ChangeName from "./ChangeName";
@@ -6,12 +6,33 @@ import { useSelector, useDispatch } from "react-redux";
 import {
   blockUpdateNameAction,
   blockUpdatePasswordAction,
-} from "../redux/actions/displayActions";
+} from "../redux/displaySlice";
+// import {
+//   blockUpdateNameAction,
+//   blockUpdatePasswordAction,
+// } from "../redux/actions/displayActions";
 
 function Profile() {
-  const displayName = useSelector((state) => state.displayUpdateName);
-  const displayPassword = useSelector((state) => state.displayUpdatePassword);
+  const displayName = useSelector(
+    // (state) => state.displayReducer.displayUpdateName
+    (state) => state.displaySlice.displayUpdateName
+  );
+  const displayPassword = useSelector(
+    // (state) => state.displayReducer.displayUpdatePassword
+    (state) => state.displaySlice.displayUpdatePassword
+  );
   const dispatch = useDispatch();
+
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  useEffect(() => {
+    const dataUser = localStorage.getItem("user");
+    if (dataUser) {
+      const foundUser = JSON.parse(dataUser);
+      setName(foundUser.name);
+      setEmail(foundUser.email);
+    }
+  }, []);
   return (
     <>
       <NavbarTop />
@@ -23,7 +44,7 @@ function Profile() {
             type="email"
             id="labelEmail"
             className="block px-2.5 pb-2.5 pt-4 w-full text-sm text-gray-900 bg-transparent rounded-lg border-1 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500 peer focus:placeholder:text-slate-400 placeholder:text-transparent"
-            value="test@gamil.com"
+            value={email}
             disabled
           />
           <label
@@ -40,7 +61,7 @@ function Profile() {
               type="text"
               id="labelName"
               className="block px-2.5 pb-2.5 pt-4 w-full text-sm text-gray-900 bg-transparent rounded-lg border-1 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500 peer focus:placeholder:text-slate-400 placeholder:text-transparent"
-              value="Mohammed Ahmed"
+              value={name}
               readOnly
             />
             <label
