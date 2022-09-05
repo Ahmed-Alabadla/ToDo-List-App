@@ -14,6 +14,9 @@ function HomePage() {
   const displayUpdate = useSelector(
     (state) => state.displaySlice.displayUpdateTask
   );
+  const displayDelete = useSelector(
+    (state) => state.displaySlice.displayDeleteTask
+  );
 
   const dispatch = useDispatch();
 
@@ -66,7 +69,7 @@ function HomePage() {
         </div>
 
         {/* Tasks */}
-        <Tasks display={displayUpdate} />
+        <Tasks display={displayUpdate} delete={displayDelete} />
       </div>
 
       {/* Add Tasks */}

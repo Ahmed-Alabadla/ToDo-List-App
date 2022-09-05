@@ -5,6 +5,7 @@ export const displaySlice = createSlice({
   initialState: {
     displayAddTask: "hidden",
     displayUpdateTask: "hidden",
+    displayDeleteTask: "hidden",
     displayUpdateName: "hidden",
     displayUpdatePassword: "hidden",
   },
@@ -23,6 +24,14 @@ export const displaySlice = createSlice({
     },
     hiddenUpdateTaskAction: (state) => {
       state.displayUpdateTask = "hidden";
+    },
+
+    // Delete Task
+    blockDeleteTaskAction: (state) => {
+      state.displayDeleteTask = "block";
+    },
+    hiddenDeleteTaskAction: (state) => {
+      state.displayDeleteTask = "hidden";
     },
 
     // Change Name
@@ -49,6 +58,9 @@ export const {
 
   blockUpdateTaskAction,
   hiddenUpdateTaskAction,
+
+  blockDeleteTaskAction,
+  hiddenDeleteTaskAction,
 
   blockUpdateNameAction,
   hiddenUpdateNameAction,
