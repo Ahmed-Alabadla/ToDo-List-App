@@ -65,7 +65,7 @@ const Task = () => {
           <small className="text-xs text-gray-500">9:02 AM, 08/29/2022</small>
         </div>
       </div>
-      <div className="flex items-center gap-2">
+      <div className="flex items-center gap-3">
         <button
           className=" bg-[#eee] rounded p-1 transition-all duration-300 hover:bg-[#dedfe1]"
           onClick={() => setDisplayUpdate("block")}

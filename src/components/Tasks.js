@@ -11,6 +11,7 @@ import {
 import UpdateTask from "./UpdateTask";
 import DeleteTask from "./DeleteTask";
 import Task from "./Task";
+import Loading from "./Loading";
 
 function Tasks(props) {
   const [completed, setCompleted] = useState(false);
@@ -26,9 +27,9 @@ function Tasks(props) {
   };
 
   return (
-    <div className="w-full bg-[#ecedf6] p-5 rounded-lg mt-2 flex flex-col gap-5">
+    <div className="w-full bg-[#ecedf6] p-5 rounded-lg mt-2 flex flex-col gap-5 ">
       {/* ----------- */}
-      <div className="bg-white rounded flex justify-between p-3">
+      <div className="bg-white rounded flex justify-between p-3 ">
         <div className="flex items-center gap-3">
           <input
             onClick={() => setCompleted(!completed)}
@@ -48,7 +49,7 @@ function Tasks(props) {
             <small className="text-xs text-gray-500">9:02 AM, 08/29/2022</small>
           </div>
         </div>
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-3">
           <button
             className=" bg-[#eee] rounded p-1 transition-all duration-300 hover:bg-[#dedfe1]"
             onClick={handleClickUpdate}
@@ -68,6 +69,12 @@ function Tasks(props) {
       {/* ----------- */}
       <Task />
       <Task />
+
+      {/* -------No task------- */}
+
+      <div className="w-1/2 rounded-full bg-white text-center p-4 mx-auto text-xl">
+        No Tasks
+      </div>
     </div>
   );
 }

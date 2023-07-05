@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { IoIosArrowBack } from "react-icons/io";
 
 function ForgotPassword() {
   const [email, setEmail] = useState("");
@@ -9,13 +10,10 @@ function ForgotPassword() {
   const {
     register,
     handleSubmit,
-    watch,
     formState: { errors },
   } = useForm();
 
-  // check password event
-  const checkPassword = watch("password");
-
+  const route = useNavigate();
   // handleSubmit
   const onSubmit = (data) => {
     console.log(data);
@@ -27,6 +25,13 @@ function ForgotPassword() {
   return (
     <div className="h-screen flex items-center justify-center">
       <div className="bg-white w-[448px] max-w-md  shadow-lg rounded-xl m-10">
+        <button
+          className="flex items-center gap-1 mt-3 mx-3"
+          onClick={() => route("/login")}
+        >
+          <IoIosArrowBack />
+          Back
+        </button>
         <h2 className="text-2xl font-semibold text-center mt-4 mx-2">
           Forgot Password
         </h2>

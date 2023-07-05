@@ -3,6 +3,9 @@ import { Link, useNavigate } from "react-router-dom";
 import { AiFillEyeInvisible, AiFillEye } from "react-icons/ai";
 import axios from "axios";
 import { useEffect } from "react";
+import setAuthHeader from "../utils/setAuthHeader";
+import { useDispatch } from "react-redux";
+import { newName, newPassword } from "../redux/userSlice";
 
 const SignIn = () => {
   // handle Password eye
@@ -13,6 +16,8 @@ const SignIn = () => {
 
   const [success, setSuccess] = useState(true);
   const [alertMessage, setAlertMessage] = useState("");
+
+  const dispatch = useDispatch();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -34,6 +39,9 @@ const SignIn = () => {
       .then((res) => {
         if (res.data.code === 200) {
           localStorage.setItem("user", JSON.stringify(res.data.data));
+          // setAuthHeader(res.data.data.token);
+          dispatch(newName(res.data.data.name));
+          dispatch(newPassword(res.data.data.password));
           setSuccess(true);
           route("/");
         }
@@ -55,6 +63,7 @@ const SignIn = () => {
       route("/");
     }
   }, []);
+
   return (
     <div className="h-screen   flex items-center justify-center ">
       <div className="max-w-md w-full space-y-8 py-12 px-4 sm:px-6 lg:px-8 rounded-lg shadow-lg mx-auto">
@@ -94,7 +103,6 @@ const SignIn = () => {
           method="POST"
           onSubmit={handleSubmit}
         >
-          {/* <input type="hidden" name="remember" value="true" /> */}
           <div className="relative">
             <input
               name="email"

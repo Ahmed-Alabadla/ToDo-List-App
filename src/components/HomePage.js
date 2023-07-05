@@ -34,7 +34,7 @@ function HomePage() {
       setUser(foundUser);
       console.log(foundUser);
     } else {
-      route("/login");
+      // route("/login");
     }
   }, []);
 
@@ -44,7 +44,7 @@ function HomePage() {
 
       {/* Main Section */}
       <div className="w-[95%] sm:w-[80%] md:w-[60%] mx-auto mt-20">
-        <h2 className="uppercase font-bold text-3xl text-center mb-10">
+        <h2 className="uppercase font-bold text-5xl text-center mb-10 text-[#646681]">
           todo list
         </h2>
         <div>

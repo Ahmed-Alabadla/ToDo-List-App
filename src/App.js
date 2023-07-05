@@ -10,7 +10,7 @@ import ResetPassword from "./components/ResetPassword";
 function App() {
   return (
     <>
-      <BrowserRouter>
+      <BrowserRouter basename="/">
         <Routes>
           <Route path="/" element={<HomePage />} />
           <Route path="/login" element={<SignIn />} />

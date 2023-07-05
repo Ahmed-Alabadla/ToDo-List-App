@@ -25,30 +25,38 @@ function ChangeName(props) {
   const {
     register,
     handleSubmit,
-    watch,
     formState: { errors },
   } = useForm();
+
+  const [token, setToken] = useState("");
+  useEffect(() => {
+    const dataUser = localStorage.getItem("user");
+    if (dataUser) {
+      const foundUser = JSON.parse(dataUser);
+      setToken(foundUser.token);
+    }
+  }, []);
 
   // handleSubmit
   const onSubmit = (data) => {
     console.log(data);
 
-    // axios
-    //   .post(
-    //     "https://tasks-todo-list-api.000webhostapp.com/api/login",
-    //     data,
-    //     {
-    //       headers: {
-    //         Accept: "application/json",
-    //         "Content-Type": "multipart/form-data",
-    //       },
-    //     }
-    //   )
-    //   .then((res) => {
-
-    //     console.log(res.data);
-    //   })
-    //   .catch((err) => console.log(err));
+    axios
+      .post(
+        "https://tasks-todo-list-api.000webhostapp.com/api/change_name",
+        data,
+        {
+          headers: {
+            Accept: "application/json",
+            "Content-Type": "multipart/form-data",
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      )
+      .then((res) => {
+        console.log(res.data);
+      })
+      .catch((err) => console.log(err));
   };
 
   return (

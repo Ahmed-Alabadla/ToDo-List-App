@@ -8,17 +8,32 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 
 function NavbarTop() {
-  const handleClick = (e) => {
+  // const route = useNavigate(); // /login
+  useEffect(() => {
+    const dataUser = localStorage.getItem("user");
+    if (dataUser) {
+      const foundUser = JSON.parse(dataUser);
+      setToken(foundUser.token);
+    }
+  }, []);
+
+  const [token, setToken] = useState("");
+
+  const config = {
+    headers: {
+      Authorization: "Bearer " + token,
+      //     Accept: "application/json",
+      //     "Content-Type": "multipart/form-data",
+    },
+  };
+  const handleClickLogout = (e) => {
     e.preventDefault();
-    // axios
-    //   .get("https://tasks-todo-list-api.000webhostapp.com/api/logout", {
-    //     headers: {
-    //       Accept: "application/json",
-    //       "Content-Type": "multipart/form-data",
-    //     },
-    //   })
-    //   .then((res) => console.log(res));
-    localStorage.clear();
+
+    axios
+      .get(`https://tasks-todo-list-api.000webhostapp.com/api/logout`, config)
+      .then((res) => console.log(res));
+
+    // localStorage.clear();
   };
 
   const [name, setName] = useState("");
@@ -51,11 +66,9 @@ function NavbarTop() {
 
           <Dropdown.Divider />
           <Dropdown.Item>
-            <button onClick={handleClick}>
-              <Link to="/login" className="flex">
-                <FiLogIn size={20} className="mr-3" />
-                Sign out
-              </Link>
+            <button onClick={handleClickLogout} className="flex">
+              <FiLogIn size={20} className="mr-3" />
+              Sign out
             </button>
           </Dropdown.Item>
         </Dropdown>
